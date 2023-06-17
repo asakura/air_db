@@ -1,16 +1,16 @@
 NimbleCSV.define(TSVParser, separator: "\t", escape: "\"")
 
-alias AirDB.Aircraft
-alias AirDB.Airport
-alias AirDB.Repo
-alias AirDB.Booking
-alias AirDB.Flight
-alias AirDB.Seat
-alias AirDB.Ticket
-alias AirDB.TicketFlights
-alias AirDB.BoardingPass
-
 defmodule RepoSeeder do
+  alias AirDB.Aircraft
+  alias AirDB.Airport
+  alias AirDB.Repo
+  alias AirDB.Booking
+  alias AirDB.Flight
+  alias AirDB.Seat
+  alias AirDB.Ticket
+  alias AirDB.TicketFlights
+  alias AirDB.BoardingPass
+
   def populate do
     aircrafts = Task.async(fn -> populate_aircrafts() end)
     airports = Task.async(fn -> populate_airports() end)
@@ -37,7 +37,7 @@ defmodule RepoSeeder do
     Repo.transaction(
       fn ->
         filename
-        |> File.stream!()
+        |> File.stream!([:compressed])
         |> TSVParser.parse_stream(skip_headers: false)
         |> Stream.map(to_changes)
         |> Stream.chunk_every(batch_size)
@@ -50,7 +50,7 @@ defmodule RepoSeeder do
 
   def populate_aircrafts do
     bulk_insert(
-      "priv/repo/aircrafts.tsv",
+      "priv/repo/aircrafts.tsv.gz",
       fn [aircraft_code, model, range] ->
         Aircraft.changeset(%Aircraft{}, %{
           aircraft_code: aircraft_code,
@@ -65,7 +65,7 @@ defmodule RepoSeeder do
 
   def populate_airports do
     bulk_insert(
-      "priv/repo/airports.tsv",
+      "priv/repo/airports.tsv.gz",
       fn [airport_code, airport_name, city, coordinates, timezone] ->
         Airport.changeset(%Airport{}, %{
           airport_code: airport_code,
@@ -82,7 +82,7 @@ defmodule RepoSeeder do
 
   def populate_bookings do
     bulk_insert(
-      "priv/repo/bookings.tsv",
+      "priv/repo/bookings.tsv.gz",
       fn [book_ref, book_date, total_amount] ->
         Booking.changeset(%Booking{}, %{
           book_ref: book_ref,
@@ -97,7 +97,7 @@ defmodule RepoSeeder do
 
   def populate_flights do
     bulk_insert(
-      "priv/repo/flights.tsv",
+      "priv/repo/flights.tsv.gz",
       fn [
            flight_id,
            flight_no,
@@ -130,7 +130,7 @@ defmodule RepoSeeder do
 
   def populate_seats do
     bulk_insert(
-      "priv/repo/seats.tsv",
+      "priv/repo/seats.tsv.gz",
       fn [
            aircraft_code,
            seat_no,
@@ -149,7 +149,7 @@ defmodule RepoSeeder do
 
   def populate_tickets do
     bulk_insert(
-      "priv/repo/tickets.tsv",
+      "priv/repo/tickets.tsv.gz",
       fn [
            ticket_no,
            book_ref,
@@ -172,7 +172,7 @@ defmodule RepoSeeder do
 
   def populate_ticket_flights do
     bulk_insert(
-      "priv/repo/ticket_flights.tsv",
+      "priv/repo/ticket_flights.tsv.gz",
       fn [
            ticket_no,
            flight_id,
@@ -193,7 +193,7 @@ defmodule RepoSeeder do
 
   def populate_boarding_passes do
     bulk_insert(
-      "priv/repo/boarding_passes.tsv",
+      "priv/repo/boarding_passes.tsv.gz",
       fn [
            ticket_no,
            flight_id,
