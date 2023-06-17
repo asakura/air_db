@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :air_db, AirDB.Repo,
   database: "air_db_dev",

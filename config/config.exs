@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :air_db, :ecto_repos, [AirDB.Repo]
 
