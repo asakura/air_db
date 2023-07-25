@@ -1,22 +1,22 @@
 import Ecto.Query
-alias AirDB.Repo
+
 alias AirDB.Aircraft
+alias AirDB.Repo
 
 IO.puts(
   ">>> INSERT INTO aircrafts (aircraft_code, model, range) VALUES ('SU9', 'Sukhoi SuperJet-100', 3000)"
 )
 
-%Aircraft{}
-|> Aircraft.changeset(%{
+%Aircraft{
   aircraft_code: "SU9",
   model: "Sukhoi SuperJet-100",
   range: 3000
-})
+}
 |> Repo.insert()
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
-Repo.all(from "aircrafts", select: [:aircraft_code, :model, :range])
-|> IO.inspect()
+Repo.all(from a in Aircraft, select: map(a, [:aircraft_code, :model, :range]))
+|> IO.inspect(label: ">>> ")
 
 """
 >>> INSERT INTO aircrafts (aircraft_code, model, range)
@@ -31,8 +31,7 @@ Repo.all(from "aircrafts", select: [:aircraft_code, :model, :range])
 """
 |> IO.puts()
 
-Aircraft
-|> Repo.insert_all([
+Repo.insert_all(Aircraft, [
   %{aircraft_code: "773", model: "Boeing 777-300", range: 11100},
   %{aircraft_code: "763", model: "Boeing 767-300", range: 7900},
   %{aircraft_code: "733", model: "Boeing 737-300", range: 4200},
@@ -42,7 +41,7 @@ Aircraft
   %{aircraft_code: "CN1", model: "Cessna 208 Caravan", range: 1200},
   %{aircraft_code: "CR2", model: "Bombardier CRJ-200", range: 2700}
 ])
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
-Repo.all(from "aircrafts", select: [:aircraft_code, :model, :range])
-|> IO.inspect()
+Repo.all(from a in Aircraft, select: map(a, [:aircraft_code, :model, :range]))
+|> IO.inspect(label: ">>> ")
