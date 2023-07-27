@@ -1,12 +1,14 @@
 import Ecto.Query
-alias AirDB.Repo
+
 alias AirDB.Aircraft
+alias AirDB.Repo
 
 IO.puts("=============================================================")
 IO.puts(">>> SELECT * FROM aircrafts")
 
-Repo.all(Aircraft)
-|> IO.inspect()
+select(Aircraft, [a], map(a, ^Aircraft.__schema__(:fields)))
+|> Repo.all()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> SELECT model, aircraft_code, range FROM aircrafts ORDER BY model")
@@ -14,21 +16,19 @@ IO.puts(">>> SELECT model, aircraft_code, range FROM aircrafts ORDER BY model")
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     order_by: a.model,
-    select: [a.aircraft_code, a.model, a.range]
+    select: map(a, [:aircraft_code, :model, :range])
 
-query
-|> Repo.all()
-|> IO.inspect()
+Repo.all(query) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> order_by([a], asc: a.model)
-|> select([a], [a.aircraft_code, a.model, a.range])
+|> select([a], map(a, [:aircraft_code, :model, :range]))
 |> Repo.all()
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 
@@ -39,21 +39,19 @@ IO.puts(
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     where: a.range >= 4000 and a.range <= 6000,
-    select: [a.aircraft_code, a.model, a.range]
+    select: map(a, [:aircraft_code, :model, :range])
 
-query
-|> Repo.all()
-|> IO.inspect()
+Repo.all(query) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> where([a], a.range >= 4000 and a.range <= 6000)
-|> select([a], [a.aircraft_code, a.model, a.range])
+|> select([a], map(a, [:aircraft_code, :model, :range]))
 |> Repo.all()
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> UPDATE aircrafts SET range = 3500 WHRE aircraft_code = 'SU9'")
@@ -61,19 +59,17 @@ IO.puts(">>> UPDATE aircrafts SET range = 3500 WHRE aircraft_code = 'SU9'")
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     where: a.aircraft_code == "SU9"
 
-query
-|> Repo.update_all(set: [range: 3500])
-|> IO.inspect()
+Repo.update_all(query, set: [range: 3500]) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> where([a], a.aircraft_code == "SU9")
 |> Repo.update_all(set: [range: 3500])
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> SELECT * FROM aircrafts WHERE aircraft_code = 'SU9'")
@@ -81,21 +77,19 @@ IO.puts(">>> SELECT * FROM aircrafts WHERE aircraft_code = 'SU9'")
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     where: a.aircraft_code == "SU9",
-    select: [a.aircraft_code, a.model, a.range]
+    select: map(a, [:aircraft_code, :model, :range])
 
-query
-|> Repo.all()
-|> IO.inspect()
+Repo.one(query) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> where([a], a.aircraft_code == "SU9")
-|> select([a], [a.aircraft_code, a.model, a.range])
-|> Repo.all()
-|> IO.inspect()
+|> select([a], map(a, [:aircraft_code, :model, :range]))
+|> Repo.one()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> DELETE FROM aircrafts WHERE aircraft_code = 'CN1'")
@@ -103,19 +97,17 @@ IO.puts(">>> DELETE FROM aircrafts WHERE aircraft_code = 'CN1'")
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     where: a.aircraft_code == "CN1"
 
-query
-|> Repo.delete_all()
-|> IO.inspect()
+Repo.delete_all(query) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> where([a], a.aircraft_code == "CN1")
 |> Repo.delete_all()
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> DELETE FROM aircrafts WHERE range > 10000 OR range < 3000")
@@ -123,21 +115,19 @@ IO.puts(">>> DELETE FROM aircrafts WHERE range > 10000 OR range < 3000")
 IO.puts("keyword example")
 
 query =
-  from a in "aircrafts",
+  from a in Aircraft,
     where: a.range > 10000 or a.range < 3000
 
-query
-|> Repo.delete_all()
-|> IO.inspect()
+Repo.delete_all(query) |> IO.inspect(label: ">>> ")
 
-IO.puts("expression example")
+IO.puts("macro example")
 
-"aircrafts"
+Aircraft
 |> where([a], a.range > 10000 or a.range < 3000)
 |> Repo.delete_all()
-|> IO.inspect()
+|> IO.inspect(label: ">>> ")
 
 IO.puts("=============================================================")
 IO.puts(">>> DELETE FROM aircrafts")
 
-Repo.delete_all("aircrafts")
+Repo.delete_all(Aircraft) |> IO.inspect(label: ">>> ")
