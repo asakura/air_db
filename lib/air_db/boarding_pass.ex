@@ -1,8 +1,10 @@
 defmodule AirDB.BoardingPass do
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias AirDB.Ticket
+
   alias AirDB.Flight
+  alias AirDB.Ticket
 
   @primary_key false
   schema "boarding_passes" do
@@ -28,7 +30,9 @@ defmodule AirDB.BoardingPass do
     |> cast(params, [:ticket_no, :flight_id, :boarding_no, :seat_no])
     |> validate_required([:ticket_no, :flight_id, :boarding_no, :seat_no])
     |> unique_constraint([:ticket_no, :flight_id], name: :boarding_passes_pkey)
-    |> unique_constraint([:flight_id, :boarding_no], message: "boarding no has already been taken")
+    |> unique_constraint([:flight_id, :boarding_no],
+      message: "boarding no has already been taken"
+    )
     |> unique_constraint([:flight_id, :seat_no], message: "seat no has already been taken")
     |> foreign_key_constraint(:ticket_no,
       name: :boarding_passes_ticket_no_fkey,
