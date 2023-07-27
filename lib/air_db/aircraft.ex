@@ -1,7 +1,10 @@
 defmodule AirDB.Aircraft do
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias AirDB.Seat
+  alias AirDB.Route
 
   @primary_key false
   schema "aircrafts" do
@@ -10,6 +13,11 @@ defmodule AirDB.Aircraft do
     field :range, :integer
 
     has_many :seats, Seat,
+      foreign_key: :aircraft_code,
+      references: :aircraft_code,
+      on_replace: :mark_as_invalid
+
+    has_many :routes, Route,
       foreign_key: :aircraft_code,
       references: :aircraft_code,
       on_replace: :mark_as_invalid
