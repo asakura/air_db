@@ -14,12 +14,12 @@ IO.puts(">>> INSERT INTO seats VALUES ('123', '1A', 'Business')")
 
 """
 >>> INSERT INTO seats VALUES
-('SU9', '1A', 'Business'),
-('SU9', '1B', 'Business'),
-('SU9', '10A', 'Economy'),
-('SU9', '10B', 'Economy'),
-('SU9', '10F', 'Economy'),
-('SU9', '20F', 'Economy')
+...   ('SU9', '1A', 'Business'),
+...   ('SU9', '1B', 'Business'),
+...   ('SU9', '10A', 'Economy'),
+...   ('SU9', '10B', 'Economy'),
+...   ('SU9', '10F', 'Economy'),
+...   ('SU9', '20F', 'Economy')
 """
 |> IO.puts()
 
@@ -35,12 +35,12 @@ Repo.insert_all(Seat, [
 
 """
 >>> INSERT INTO seats VALUES
-      ('773', '1A', 'Business'),
-      ('773', '1B', 'Business'),
-      ('773', '10A', 'Economy'),
-      ('773', '10B', 'Economy'),
-      ('773', '10F', 'Economy'),
-      ('773', '20F', 'Economy')
+...   ('773', '1A', 'Business'),
+...   ('773', '1B', 'Business'),
+...   ('773', '10A', 'Economy'),
+...   ('773', '10B', 'Economy'),
+...   ('773', '10F', 'Economy'),
+...   ('773', '20F', 'Economy')
 """
 |> IO.puts()
 

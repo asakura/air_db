@@ -10,12 +10,12 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT count(*)
-      FROM ticket_flights t
-     INNER JOIN flights f
-             ON t.flight_id = f.flight_id
-      LEFT OUTER JOIN boarding_passes b
-                   ON t.ticket_no = b.ticket_no AND t.flight_id = b.flight_id
-     WHERE f.actual_departure IS NOT NULL AND b.flight_id IS NULL
+...   FROM ticket_flights t
+...  INNER JOIN flights f
+...          ON t.flight_id = f.flight_id
+...   LEFT OUTER JOIN boarding_passes b
+...                ON t.ticket_no = b.ticket_no AND t.flight_id = b.flight_id
+...  WHERE f.actual_departure IS NOT NULL AND b.flight_id IS NULL
 """
 |> IO.puts()
 
@@ -66,26 +66,26 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT f.flight_no,
-           f.scheduled_departure,
-           f.flight_id,
-           f.departure_airport_code,
-           f.arrival_airport_code,
-           f.aircraft_code,
-           t.passenger_name,
-           tf.fare_conditions AS fc_was,
-           s.fare_conditions AS fc_should_be,
-           b.seat_no
-      FROM boarding_passes b
-      JOIN ticket_flights tf
-        ON b.ticket_no = tf.ticket_no AND b.flight_id = tf.flight_id
-      JOIN tickets t
-        ON tf.ticket_no = t.ticket_no
-      JOIN flights f
-        ON tf.flight_id = f.flight_id
-      JOIN seats s
-        ON b.seat_no = s.seat_no AND f.aircraft_code = s.aircraft_code
-     WHERE tf.fare_conditions <> s.fare_conditions
-     ORDER BY f.flight_no, f.scheduled_departure
+...        f.scheduled_departure,
+...        f.flight_id,
+...        f.departure_airport_code,
+...        f.arrival_airport_code,
+...        f.aircraft_code,
+...        t.passenger_name,
+...        tf.fare_conditions AS fc_was,
+...        s.fare_conditions AS fc_should_be,
+...        b.seat_no
+...   FROM boarding_passes b
+...   JOIN ticket_flights tf
+...     ON b.ticket_no = tf.ticket_no AND b.flight_id = tf.flight_id
+...   JOIN tickets t
+...     ON tf.ticket_no = t.ticket_no
+...   JOIN flights f
+...     ON tf.flight_id = f.flight_id
+...   JOIN seats s
+...     ON b.seat_no = s.seat_no AND f.aircraft_code = s.aircraft_code
+...  WHERE tf.fare_conditions <> s.fare_conditions
+...  ORDER BY f.flight_no, f.scheduled_departure
 """
 |> IO.puts()
 

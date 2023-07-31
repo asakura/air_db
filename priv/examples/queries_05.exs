@@ -7,12 +7,12 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT model, range,
-      CASE WHEN range < 2000 THEN 'Close range'
-           WHEN range < 5000 THEN 'Middle range'
-           ELSE 'Long range'
-       END AS type
-      FROM aircrafts
-     ORDER BY model
+...   CASE WHEN range < 2000 THEN 'Close range'
+...        WHEN range < 5000 THEN 'Middle range'
+...        ELSE 'Long range'
+...    END AS type
+...   FROM aircrafts
+...  ORDER BY model
 """
 |> IO.puts()
 

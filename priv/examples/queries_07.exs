@@ -8,10 +8,10 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT r.aircraft_code, a.model, count(*) AS num_routes
-      FROM routes r
-      JOIN aircrafts a ON r.aircraft_code = a.aircraft_code
-     GROUP BY 1, 2
-     ORDER BY 3 DESC
+...   FROM routes r
+...   JOIN aircrafts a ON r.aircraft_code = a.aircraft_code
+...  GROUP BY 1, 2
+...  ORDER BY 3 DESC
 """
 |> IO.puts()
 
@@ -42,13 +42,13 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT a.aircraft_code AS a_code,
-           a.model,
-           r.aircraft_code AS r_code,
-           count(r.aircraft_code) AS num_routes
-      FROM aircrafts a
-      LEFT OUTER JOIN routes r ON r.aircraft_code = a.aircraft_code
-     GROUP BY 1, 2, 3
-     ORDER BY 4 DESC
+...        a.model,
+...        r.aircraft_code AS r_code,
+...        count(r.aircraft_code) AS num_routes
+...   FROM aircrafts a
+...   LEFT OUTER JOIN routes r ON r.aircraft_code = a.aircraft_code
+...  GROUP BY 1, 2, 3
+...  ORDER BY 4 DESC
 """
 |> IO.puts()
 
@@ -81,13 +81,13 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT a.aircraft_code AS a_code,
-           a.model,
-           r.aircraft_code AS r_code,
-           count(r.aircraft_code) AS num_routes
-      FROM routes r
-      RIGHT OUTER JOIN aircrafts a ON r.aircraft_code = a.aircraft_code
-      GROUP BY 1, 2, 3
-      ORDER BY 4 DESC
+...        a.model,
+...        r.aircraft_code AS r_code,
+...        count(r.aircraft_code) AS num_routes
+...   FROM routes r
+...   RIGHT OUTER JOIN aircrafts a ON r.aircraft_code = a.aircraft_code
+...   GROUP BY 1, 2, 3
+...   ORDER BY 4 DESC
 """
 |> IO.puts()
 

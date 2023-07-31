@@ -28,8 +28,8 @@ IO.puts("=============================================================")
 
 """
 >>> SELECT * FROM aircrafts
-     WHERE model NOT LIKE 'Airbus%'
-       AND model NOT LIKE 'Boeing%'
+...  WHERE model NOT LIKE 'Airbus%'
+...    AND model NOT LIKE 'Boeing%'
 """
 |> IO.puts()
 
