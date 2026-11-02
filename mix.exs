@@ -32,7 +32,7 @@ defmodule AirDB.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:nimble_csv, "~> 1.2"},
       {:jason, "~> 1.4"},
-      {:stream_data, "~> 0.5", only: [:dev, :test]},
+      {:stream_data, "~> 1.4", only: [:dev, :test]},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
